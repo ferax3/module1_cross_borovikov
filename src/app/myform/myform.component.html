@@ -1,0 +1,78 @@
+<form [formGroup]="cinemaForm" (ngSubmit)="onSubmit()">
+  <ion-card>
+    <ion-card-content>Описати абстрактний клас Viewer, що відповідає глядачам кінотеатру. Він повинен містити:
+      • поле visits, що зберігає кількість відвідувань;
+      • метод Visit (відвідати), що збільшує число відвідувань на 1;
+      • абстрактний метод Cost (вартість), який одержує ціну квитка і повертає його вартість з урахуванням знижок.
+      Початкове кількість відвідувань задається за допомогою конструктора.
+      Описати класи RegularViewer (постійний відвідувач) і StudentViewer
+      (Студент), що є нащадками класу Viewer. Постійний відвідувач
+      за кожні 10 відвідувань отримує додаткову знижку в 1%, але не
+      більше, ніж 20%. Для студентів на кожне третє відвідування дається знижка в 50%.
+      Написати сервіс,  для обрахунку  для моделювання відвідування кінотеатру.
+      </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Кінотеатр</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position = 'floating'>Назва кінотеатру </ion-label>
+        <ion-input id = "cinema-name" type="text" formControlName="cinemaName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position = 'floating'>Адреса </ion-label>
+        <ion-input id = "cinema-address" type="text" formControlName="cinemaAddress"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position = 'floating'>Місткість </ion-label>
+        <ion-input id = "cinema-capacity" type="number" formControlName="cinemaCapacity"></ion-input>
+      </ion-item>
+      <app-sumview [sum]="sum"></app-sumview>
+      <h2>Якщо вам потрібне поле студент, прогорніть донизу😄</h2>
+
+      <ion-card formArrayName="regulars">
+        <ion-card-header>
+          <ion-card-title>Для відвідувачів</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-button color="tertiary" (click)="addRegulars()">
+          <ion-icon slot="start" name="add"></ion-icon>
+          Додати кількість відвідування
+          </ion-button>
+          <ion-item *ngFor="let regular of getControlsRegulars(); let i = index">
+            <ion-input type="number" formControlName={{i}} placeholder="Кількість відвідування"></ion-input>
+            <ion-button color="tertiary" (click)="deleteRegulars(i)">
+              <ion-icon slot="start" name="trash"></ion-icon>Видалити
+            </ion-button>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+      
+
+      <ion-card formArrayName="students">
+        <ion-card-header>
+          <ion-card-title>Для студентів</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-button color="tertiary" (click)="addStudents()">
+          <ion-icon slot="start" name="add"></ion-icon>
+          Додати кількість відвідування
+          </ion-button>
+          <ion-item *ngFor="let regular of getControlsStudents(); let i = index">
+            <ion-input type="number" formControlName={{i}} placeholder="Кількість відвідування"></ion-input>
+            <ion-button color="tertiary" (click)="deleteStudents(i)">
+              <ion-icon slot="start" name="trash"></ion-icon>Видалити
+            </ion-button>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+
+    </ion-card-content>
+  </ion-card>
+  <ion-button type="submit" color="my-color" expand="block" fill="outline" [disabled]="!cinemaForm.valid">
+  Submit
+  </ion-button>
+
+</form>
